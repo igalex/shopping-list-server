@@ -1,8 +1,8 @@
-# syntax = docker/dockerfile:1
+# syntax = docker.io/docker/dockerfile:1
 
 # Adjust NODE_VERSION as desired
-ARG NODE_VERSION=20.9.0
-FROM node:${NODE_VERSION}-slim as base
+ARG NODE_VERSION=20.11.1
+FROM docker.io/library/node:${NODE_VERSION}-slim as base
 
 # Node.js app lives here
 WORKDIR /app
@@ -15,11 +15,11 @@ ENV NODE_ENV="production"
 FROM base as build
 
 # Install node modules
-COPY --link package-lock.json package.json ./
+COPY package-lock.json package.json ./
 RUN npm ci
 
 # Copy application code
-COPY --link . .
+COPY . .
 
 
 # Final stage for app image
